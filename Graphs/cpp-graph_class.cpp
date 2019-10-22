@@ -154,10 +154,10 @@ class graph{
                 for(int j=0;j<vertices;j++)
                     weight_matrix[i].push_back(weight[i][j]);
 
-            //source
-            for(int i=0;i<vertices;i++){
-                //via
-                for(int j=0;j<vertices;j++){
+            //via
+            for(int j=0;j<vertices;j++){
+                //source
+                for(int i=0;i<vertices;i++){
                     //to
                     for(int k=0;k<vertices;k++){
                         weight_matrix[i][k]=min(weight_matrix[i][k],weight_matrix[i][j]+weight_matrix[j][k]);
@@ -187,7 +187,7 @@ int main(){
     //g.dfs(0);
     //g.bfs(0);
     for(int i=0;i<g.vertices;i++){
-        //g.dijkstra(i); cout<<endl;
+        g.dijkstra(i); cout<<endl;
     }
     g.floyd_warshell();
     

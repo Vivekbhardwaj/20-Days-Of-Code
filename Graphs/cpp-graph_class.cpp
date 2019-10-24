@@ -1,3 +1,6 @@
+/**Author : Vivek Bhardwaj
+ **/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -8,6 +11,7 @@ class graph{
         vector<bool> visited;
         vector<long long> distance;
         vector<pair<int,int>> edge_list;
+        vector<int> ans;
         long long ** weight;
         const long long INF=1e18;
         
@@ -81,6 +85,16 @@ class graph{
                     cout<<"Graph has a negative weight cycle "<<"\n";break;
                 }
             }
+        }
+
+        void topological_sort_util(int start=0){
+            visited[start]=true;
+            for(auto i : adj[start]){
+                if(!visited[i]){
+                    topological_sort_util(i);
+                }
+            }
+            ans.push_back(start);
         }
 
     
@@ -172,11 +186,20 @@ class graph{
                 cout<<endl;
             }
         }
+
+        vector<int> topological_sort(){
+            visited_util();
+            ans.clear();
+            topological_sort_util();
+            reverse(ans.begin(),ans.end());
+            return ans;
+        }
 };
 
 int main(){
 
     graph g(5);
+    graph g2(5);
     g.add_undirected_edge(0,1,4);
     g.add_undirected_edge(0,2,2);
     g.add_undirected_edge(1,2,2);
@@ -184,11 +207,24 @@ int main(){
     g.add_undirected_edge(2,3,5);
     g.add_undirected_edge(2,4,9);
     g.add_undirected_edge(3,4,4);
+
+
+    g2.add_directed_edge(0,1);
+    g2.add_directed_edge(0,2);
+    g2.add_directed_edge(1,4);
+    g2.add_directed_edge(1,3);
+    g2.add_directed_edge(2,3);
+    g2.add_directed_edge(4,2);
+    g2.add_directed_edge(3,4);
+
     //g.dfs(0);
     //g.bfs(0);
-    for(int i=0;i<g.vertices;i++){
+    /*for(int i=0;i<g.vertices;i++){
         g.dijkstra(i); cout<<endl;
     }
-    g.floyd_warshell();
+    g.floyd_warshell();*/
+
+    vector<int> topological_order = g2.topological_sort();
+    for(auto i : topological_order) cout<<i<<" ";
     
 }

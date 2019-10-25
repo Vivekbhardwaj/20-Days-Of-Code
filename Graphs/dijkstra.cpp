@@ -1,7 +1,17 @@
+/**Author : Vivek Bhardwaj
+ * Dijkstra Implementation
+ **/
+
 #include<bits/stdc++.h>
 using namespace std;
 
-vector<int> dijkstra(vector<vector<pair<int,int>>> v,int source){
+const long long INF = 1e18;
+
+
+/**Naive Approach of Djkstra O(n^2)
+ * Suitable for Dense Graphs
+ **/
+/*vector<int> dijkstra(vector<vector<pair<int,int>>> v,int source){
     vector<int> distance(v.size(),INT_MAX);
     vector<bool> visited(v.size(),false);
 
@@ -27,6 +37,34 @@ vector<int> dijkstra(vector<vector<pair<int,int>>> v,int source){
     }
 
     return distance;
+}*/
+
+/**Lazy Implementation of Djkstra using Set
+ * O(mlogn)
+ **/
+vector<long long> dijkstra(vector<vector<pair<int,int>>> v,int source){
+    vector<long long> distance(v.size(),INF);
+
+    distance[source]=0;
+    set<pair<long long,int>> s;
+    s.insert({0,source});
+
+    while(!s.empty()){
+        for(auto i : v[s.begin()->second]){
+            if(distance[i.first]==INF){
+                distance[i.first]=distance[s.begin()->second]+i.second;
+                s.emplace(distance[i.first],i.first);
+            }
+            else if(distance[i.first]>distance[s.begin()->second]+i.second){
+                s.erase({distance[i.first],i.first});
+                distance[i.first]=distance[s.begin()->second]+i.second;
+                s.insert({distance[i.first],i.first});
+            }
+        }
+        s.erase(s.begin());
+    }
+
+    return distance;
 }
 
 int main(){
@@ -45,7 +83,7 @@ int main(){
     v[4].emplace_back(1,2);
     v[4].emplace_back(3,5);
     for(int i=0;i<5;i++){
-        vector<int> dist=dijkstra(v,i);
+        vector<long long> dist=dijkstra(v,i);
         for(auto i : dist){
             cout<<i<<" ";
         }

@@ -1,10 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void eulers_tour(vector<vector<int>>&tree,vector<int>&euler,int current_node){
+void height_of_tree(vector<vector<int>>&tree,vector<int>&euler,int current_node){
     euler.push_back(current_node);
     for(auto nodes : tree[current_node]){
-        eulers_tour(tree,euler,nodes);
+        height_of_tree(tree,euler,nodes);
 
         euler.push_back(current_node);
     }
@@ -21,6 +21,6 @@ int main(){
     v[2].push_back(6);
     v[6].push_back(7);
     vector<int> euler;
-    eulers_tour(v,euler,0);
+    height_of_tree(v,euler,0);
     for(auto i : euler) cout<<i<<" ";
 }

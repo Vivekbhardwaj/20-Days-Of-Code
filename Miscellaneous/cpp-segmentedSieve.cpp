@@ -40,7 +40,7 @@ vector<long long> segmented_sieve(long long low,long long high){
     }
 
     for(int i=0;i<high-low+1;i++){
-        if(isPrime[i]) ans.push_back(i+(low+1));
+        if(isPrime[i]) ans.push_back(i+low);
     }
 
     return ans;
@@ -48,6 +48,6 @@ vector<long long> segmented_sieve(long long low,long long high){
 
 
 int main(){
-    vector<long long> v=segmented_sieve(0,12);
+    vector<long long> v=segmented_sieve(1427,14971);
     for(auto i : v) cout << i <<" ";
 }

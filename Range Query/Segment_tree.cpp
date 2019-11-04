@@ -1,3 +1,7 @@
+/**Author : Vivek Bhardwaj
+ *          Segment Trees
+ **/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -22,6 +26,13 @@ int sum(vector<int> &s_tree,int index,int ql,int qr,int l,int r){
 
 }
 
+void update(vector<int> &s_tree,int index,int q,int val,int l,int r){
+    s_tree[index]+=val;
+    if(l==r) return;
+    if(q>(l+r)/2) update(s_tree,2*(index)+1,q,val,(l+r)/2+1,r); //if the index to be updated is on right call update query on right segment
+    else update(s_tree,2*(index),q,val,l,(l+r)/2);            //if the index to be updated is on left call update query on left segment
+}
+
 
 int main(){
     vector<int> arr={1,2,3,4,5,6,7,8};
@@ -39,4 +50,6 @@ int main(){
 
     */
     cout<<"\n"<<sum(s_tree,1,2,4,0,7)<<"\n";
+    update(s_tree,1,4,9,0,(int)arr.size()-1);   //increase the value of 4th index(5th element) by 9;
+    for(int i=1;s_tree[i]!=0;i++) cout<<s_tree[i]<<" ";
 }

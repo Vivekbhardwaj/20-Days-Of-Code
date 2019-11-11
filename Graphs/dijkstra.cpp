@@ -40,7 +40,7 @@ const long long INF = 1e18;
 }*/
 
 /**Lazy Implementation of Djkstra using Set
- * O(nlogn)
+ * O(mlogn)
  **/
 vector<long long> dijkstra(vector<vector<pair<int,int>>> v,int source){
     vector<long long> distance(v.size(),INF);
